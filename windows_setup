@@ -1,0 +1,19 @@
+将vim文件夹下的_vimrc文件修改成如下内容
+需要在系统中设置环境变量$HOME
+并将文件夹配置文件下载到对应的路径中即可完成配置，在vim8.1测试通过
+
+set nocompatible
+source $VIMRUNTIME/vimrc_example.vim
+" source $VIMRUNTIME/mswin.vim
+behave mswin
+set runtimepath+=$HOME/.vim/vim_runtime
+
+source $HOME/.vim/vim_runtime/vimrcs/basic.vim
+source $HOME/.vim/vim_runtime/vimrcs/filetypes.vim
+source $HOME/.vim/vim_runtime/vimrcs/plugins_config.vim
+source $HOME/.vim/vim_runtime/vimrcs/extended.vim
+
+try
+source $HOME/.vim/vim_runtime/my_configs.vim
+catch
+endtry
