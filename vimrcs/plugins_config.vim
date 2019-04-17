@@ -4,6 +4,40 @@
 "
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 
+"""""""""""""""""""""""""""""""""""""""""""
+" cscope:建立数据库：cscope -Rbq  
+"""""""""""""""""""""""""""""""""""""""""""
+if has("cscope")
+  set csprg=/usr/bin/cscope
+  set csto=1
+  set cst
+  set nocsverb
+  " add any database in current directory
+  if filereadable("cscope.out")
+      cs add cscope.out
+  endif
+  set csverb
+endif
+
+
+:set cscopequickfix=s-,c-,d-,i-,t-,e-
+
+" nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-_>g :cs find g <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-_>c :cs find c <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-_>t :cs find t <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-_>e :cs find e <C-R>=expand("<cword>")<CR><CR>
+" nmap <C-_>f :cs find f <C-R>=expand("<cfile>")<CR><CR>
+" nmap <C-_>i :cs find i ^<C-R>=expand("<cfile>")<CR>$<CR>
+" nmap <C-_>d :cs find d <C-R>=expand("<cword>")<CR><CR>
+
+
+"nmap <C-_>s :cs find s <C-R>=expand("<cword>")<CR><CR>
+"F5 查找c符号； F6 查找字符串；   F7 查找函数定义； F8 查找函数谁调用了，
+nmap <silent> <F5> :cs find s <C-R>=expand("<cword>")<CR><CR> :botright copen<CR><CR> 
+nmap <silent> <F6> :cs find t <C-R>=expand("<cword>")<CR><CR> :botright copen<CR><CR>
+nmap <silent> <F7> :cs find g <C-R>=expand("<cword>")<CR><CR> 
+nmap <silent> <F8> :cs find c <C-R>=expand("<cword>")<CR><CR> :botright copen<CR><CR>
 
 """""""""""""""""""""""""""""
 " => TagbarToggle
@@ -15,6 +49,11 @@ let g:tagbar_autofocus = 1             "这是tagbar一打开，光标即在tagb
 let g:tagbar_sort = 0                  "设置标签不排序，默认排序 
 map <silent> <leader>tt :TagbarToggle<CR>
 
+"  自动加载ctags: ctags -R
+if filereadable("tags")
+      set tags=tags
+endif
+
 """"""""""""""""""""""""""""""
 " => Load pathogen paths
 """"""""""""""""""""""""""""""
@@ -23,6 +62,43 @@ call pathogen#infect(s:vim_runtime.'/sources_forked/{}')
 call pathogen#infect(s:vim_runtime.'/sources_non_forked/{}')
 call pathogen#infect(s:vim_runtime.'/my_plugins/{}')
 call pathogen#helptags()
+
+"""""""""""""""""""""""""""""
+" => YouCompleteMe
+"""""""""""""""""""""""""""""
+set runtimepath+=~/.vim_runtime/my_plugins/YouCompleteMe
+" 映射按键, 没有这个会拦截掉tab, 导致其他插件的tab不能用.
+let g:ycm_key_list_select_completion = ['<c-n>', '<Down>'] 
+" let g:ycm_key_list_select_completion = ['<Down>'] 
+let g:ycm_key_list_previous_completion = ['<c-p>', '<Up>']
+" let g:ycm_key_list_previous_completion = ['<Up>']
+
+
+"关闭加载 .ycm_extra_conf.py提示
+let g:ycm_confirm_extra_conf = 0
+" 开启 YCM 基于标签引擎
+let g:ycm_collect_identifiers_from_tags_files = 1           
+" 从第2个键入字符就开始罗列匹配项
+let g:ycm_min_num_of_chars_for_completion=2                 
+" 禁止缓存匹配项，每次都重新生成匹配项目
+let g:ycm_cache_omnifunc = 1
+" 语法关键字补全
+let g:ycm_seed_identifiers_with_syntax = 0                  
+" 在字符串输入中也能补全
+let g:ycm_complete_in_strings = 1                           
+" 在注释输入中也能补全
+let g:ycm_complete_in_comments = 1                          
+" 注释和字符串中的文字也会被收入补全
+let g:ycm_collect_identifiers_from_comments_and_strings = 1 
+" nnoremap <c-j> :YcmCompleter GoToDefinitionElseDeclaration<CR>|     " 跳转到定义处
+" inoremap <expr> <CR> pumvisible() ? "\<C-y>" : "\<CR>" |            " 回车即选中当前项
+
+let g:ycm_show_diagnostics_ui = 0                           " 禁用语法检查
+"
+let g:syntastic_ignore_files=[".*\.cpp$"]
+let g:ycm_global_ycm_extra_conf='~/.vim_runtime/my_plugins/YouCompleteMe/third_party/ycmd/.ycm_extra_conf.py'
+"let g:ycm_global_ycm_extra_conf ='~/.vim/.ycm_extra_conf.py' 
+"
 
 """"""""""""""""""""""""""""""
 " => bufExplorer plugin
@@ -178,9 +254,18 @@ nmap <silent> <leader>a <Plug>(ale_next_wrap)
 let g:ale_set_highlights = 0
 
 " Only run linting when saving the file
+" 文件内容发生变化时不进行检查
 let g:ale_lint_on_text_changed = 'never'
+"打开文件时不进行检查
 let g:ale_lint_on_enter = 0
 
+"普通模式下，sp前往上一个错误或警告，sn前往下一个错误或警告
+nmap sp <Plug>(ale_previous_wrap)
+nmap sn <Plug>(ale_next_wrap)
+"<Leader>s触发/关闭语法检查
+nmap <Leader>s :ALEToggle<CR>
+"<Leader>d查看错误或警告的详细信息
+nmap <Leader>d :ALEDetail<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Git gutter (Git diff)
