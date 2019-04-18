@@ -11,7 +11,6 @@ set clipboard=unnamedplus
 
 set cursorline 
 set cursorcolumn
-map <F5> :!python warpAffine.py img1.jpg <CR>
 
 set nu
 set nowrap
