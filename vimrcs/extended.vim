@@ -35,7 +35,12 @@ colorscheme peaksea
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Fast editing and reloading of vimrc configs
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <leader>e :e! ~/.vim_runtime/my_configs.vim<cr>
+if has("win32")
+  map <leader>e :e! $HOME/.vim/vim_runtime/my_configs.vim<cr>
+else
+  map <leader>e :e! ~/.vim_runtime/my_configs.vim<cr>
+endif
+
 autocmd! bufwritepost ~/.vim_runtime/my_configs.vim source ~/.vim_runtime/my_configs.vim
 
 
