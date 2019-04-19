@@ -7,8 +7,7 @@ snippet if
 snippet ife
 	if (${1}) begin
 		${2}
-	end
-	else begin
+	end	else begin
 		${1}
 	end
 # Else if statement
@@ -25,9 +24,9 @@ snippet el
 snippet shixu
 	always  @(posedge clk or negedge rst_n)begin
 		if(rst_n==1'b0)begin
-			${0}
-		end	else begin
 			${1}
+		end else begin
+			${2}
 		end
 	end
 #zuhe statement
@@ -37,20 +36,154 @@ snippet zuhe
 	end
 #jsq statement
 snippet	jsq
+	wire add_cnt;
+	wire end_cnt;
+	reg [${0}:0] cnt;
 	always @(posedge clk or negedge rst_n)begin
 		if(!rst_n)begin
 		 	cnt <= 0;
-		end
-		else if(add_cnt)begin
+		end	else if(add_cnt)begin
 			if(end_cnt)
 				cnt <= 0;
 			else
 				cnt <= cnt + 1;
 			end
 		end
-	assign add_cnt = ${1};       
-	assign end_cnt = add_cnt && cnt== ${0} - 1 ;
+	end
+	assign add_cnt = ;       
+	assign end_cnt = add_cnt && cnt==  - 1 ;
+#jsq2 statement
+snippet jsq2
+	wire add_cnt0,add_cnt1;
+	wire end_cnt0,end_cnt1;
+	reg [${0}:0] cnt0;
+	reg [${1}:0] cnt1;
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+		 	cnt0 <= 0;
+		end else if(add_cnt0)begin
+			if(end_cnt0)
+				cnt0 <= 0;
+			else
+				cnt0 <= cnt0 + 1;
+			end
+		end
+	end
+	assign add_cnt0 = ;       
+	assign end_cnt0 = add_cnt0 && cnt0==   ;
 
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+		 	cnt1 <= 1;
+		end	else if(add_cnt1)begin
+			if(end_cnt1)
+				cnt1 <= 1;
+			else
+				cnt1 <= cnt1 + 1;
+			end
+		end
+	end
+	assign add_cnt1 = end_cnt0;       
+	assign end_cnt1 = add_cnt1 && cnt1==   ;
+#jsq3 statement
+snippet jsq3
+	wire add_cnt0,add_cnt1,add_cnt2;
+	wire end_cnt0,end_cnt1,end_cnt2;
+	reg [${1}:0] cnt0;
+	reg [${2}:0] cnt1;
+	reg [${3}:0] cnt1;
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+		 	cnt0 <= 0;
+		end else if(add_cnt0)begin
+			if(end_cnt0)
+				cnt0 <= 0;
+			else
+				cnt0 <= cnt0 + 1;
+			end
+		end
+	assign add_cnt0 = ;       
+	assign end_cnt0 = add_cnt0 && cnt0==   ;
+
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+		 	cnt1 <= 1;
+		end	else if(add_cnt1)begin
+			if(end_cnt1)
+				cnt1 <= 1;
+			else
+				cnt1 <= cnt1 + 1;
+			end
+		end
+	assign add_cnt1 = end_cnt0;       
+	assign end_cnt1 = add_cnt1 && cnt1==   ;
+	
+	always @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+			cnt2 <= 0;
+		end else if(add_cnt2)begin
+			if(end_cnt2)
+				cnt2 <= 0;
+			else
+				cnt2 <= cnt2 + 1;
+			end
+		end
+		assign add_cnt2 = end_cnt1;
+		assign end_cnt2 = add_cnt2 && cnt2== ;
+# ztj statement
+snippet ztj
+	localparam IDLE  = 3'b00;
+	localparam S1    = 3'b01;
+
+	always@(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+			state_c <= IDLE;
+	  end	else begin
+			state_c <= state_n;
+		end
+	end
+
+	always@(*)begin
+		case(state_c)
+			IDLE:begin
+				if(idl2s1_start)begin
+					state_n = S1;
+				end	else begin
+					state_n = state_c;
+				end
+			end
+			S1:begin
+				if(s12s2_start)begin
+					state_n = S2;
+				end	else begin
+					state_n = state_c;
+				end
+			end
+			S2:begin
+				if(s22s3_start)begin
+					state_n = S3;
+				end	else begin
+					state_n = state_c;
+				end
+			end
+			default:begin
+				state_n = IDLE;
+			end
+		endcase
+	end
+	assign idl2s1_start  = state_c==IDLE && ;
+	assign s12s2_start = state_c==S1    && ;
+	assign s22s3_start  = state_c==S2    && ;
+
+	always  @(posedge clk or negedge rst_n)begin
+		if(!rst_n)begin
+			out1 <=1'b0;
+		end	else if(state_c==S1)begin
+			out1 <= 1'b1;
+		end	else begin
+			out1 <= 1'b0;
+		end
+	end
 # While statement
 snippet wh
 	while (${1}) begin
@@ -86,9 +219,364 @@ snippet al
 	always @(${1:/* sensitive list */}) begin
 		${0}
 	end
+# initial block
+snippet init
+	initial begin
+		#1;
+	end
 # Module block
 snippet mod
-	module ${1:module_name} (${2});
-		${0}
+	//*********************************************************************************/
+	// Company: 
+	// Engineer: 
+	// 
+	// Create Date: 2019/04/17 10:32:28
+	// Design Name: 
+	// Module Name: 
+	// Project Name: 
+	// Target Devices: 
+	// Tool Versions: 
+	// Description: 
+	// 
+	// Dependencies: 
+	// 
+	// Revision:
+	// Revision 0.01 - File Created
+	// Additional Comments:
+	// 
+	//*********************************************************************************/
+	module ${1:module_name} #(
+		parameter DATA_W = 8 ,
+		parameter ADDR_W = 16
+	) (
+		input  wire								clk    ,
+		input  wire								rst_n  ,
+
+		output reg  [DATA_W-1:0]	dout   ,
+		${2}
+	);
+
 	endmodule
+# Header block
+snippet head
+	//*********************************************************************************/
+	// Company: 
+	// Engineer: 
+	// 
+	// Create Date: 2019/04/17 10:32:28
+	// Design Name: 
+	// Module Name: 
+	// Project Name: 
+	// Target Devices: 
+	// Tool Versions: 
+	// Description: 
+	// 
+	// Dependencies: 
+	// 
+	// Revision:
+	// Revision 0.01 - File Created
+	// Additional Comments:
+	// 
+	//*********************************************************************************/
+
+# test block
+snippet test
+	\`timescale 1 ns/1 ns  
+	module ${1:testbench_name}(); 
+	reg clk  ;
+	reg rst_n;
+	reg[3:0]  din0  ;
+	reg       din1  ;
+
+	wire      dout0;
+	wire[4:0] dout1;
+
+	parameter CYCLE    = 20;
+	parameter RST_TIME = 3 ;
+
+	module_name uut(
+		.clk          (clk     ), 
+		.rst_n        (rst_n   ),
+		.din0         (din0    ),
+		.din1         (din1    ),
+		.dout0        (dout0   ),
+		.dout1        (dout1   )
+	);
+
+	tbsource # (
+		.o_width(8),
+		.inputFile("udp.dat")
+	) udp_source(
+		.clk(clk	),
+		.ld (  		),
+		.o  ( 		)
+	);
+	initial begin
+		clk = 1;
+		forever
+		#(CYCLE/2)
+		clk=~clk;
+	end
+
+	initial begin
+		rst_n = 1;
+		#2;
+		rst_n = 0;
+		#(CYCLE*RST_TIME);
+		rst_n = 1;
+	end
+
+
+	initial begin
+		#1;
+		din0 = 0;
+		#(10*CYCLE);
+	end
+
+	integer i,j;
+	initial begin
+		#1;
+		dout0  =0;
+		#(50*CYCLE);
+		for(i=0;i<1000;i=i+1) begin
+			#(CYCLE*200);
+			for(j=0;j<{$random%50}+1;j=j+1)begin
+				#(CYCLE);
+			end
+			dout0  ={$random%100};
+		end
+	end
+	endmodule
+
+	module tbsource#(
+		parameter o_width          = 4         ,
+		parameter inputFile        = "test.dat",
+		parameter reqHoldTime      = 1.5
+	)(
+		input  wire                clk ,
+		input  wire                ld  ,
+		output wire [o_width - 1:0]o 
+	);
+
+	reg [o_width - 1:0] tmp_o;
+	reg [o_width - 1:0] tmp_1;
+	wire   sys_clk;
+
+	integer inputFilePtr;
+	integer errcheck;   //data number per fileline
+	integer start_up;
+
+	/***************************************************/
+	/*this is a example for read date to variable      */
+	/*only one data in file line can be run success    */
+	/*make sure your file date type is one word in line*/
+	/***************************************************/  
+	assign sys_clk = clk;
+	assign #reqHoldTime o = tmp_o;
+
+	initial  begin
+		start_up = 1;
+		if (start_up == 1)
+			 begin
+				 inputFilePtr = $fopen(inputFile, "r");
+				 if(inputFilePtr == `NULL)
+					 $display("failture to open %s",inputFile);
+				 errcheck = $fscanf(inputFilePtr,"%d",tmp_o);
+				 start_up = 0;
+			 end
+	 end
+
+	always @(posedge sys_clk)begin
+		if (ld && errcheck == 1 ) begin
+			errcheck = $fscanf(inputFilePtr,"%d",tmp_o);
+			$display("%d ",tmp_o);
+		end
+	end
+	 
+	endmodule
+# test fifo
+snippet tbfifo
+	/////////////////////////////////////////////////////////////////////////////////
+	// $Id: small_fifo.v 1998 2007-07-21 01:22:57Z grg $
+	//
+	// Module: fallthrough_small_fifo.v
+	// Project: utils
+	// Description: small fifo with fallthrough i.e. data valid when rd is high
+	//
+	// Change history:
+	//   7/20/07 -- Set nearly full to 2^MAX_DEPTH_BITS - 1 by default so that it
+	//              goes high a clock cycle early.
+	//   2/11/09 -- jnaous: Rewrote to make much more efficient.
+	//	 5/11/11 -- hyzeng: Rewrote based on http://www.billauer.co.il/reg_fifo.html
+	//                      to improve timing by adding output register
+	///////////////////////////////////////////////////////////////////////////////
+
+	\`timescale 1ns/1ps
+	module fallthrough_small_fifo	#	(
+				parameter WIDTH = 72,
+				parameter MAX_DEPTH_BITS = 3,
+				parameter PROG_FULL_THRESHOLD = 2**MAX_DEPTH_BITS - 1
+	)	(
+		input [WIDTH-1:0] din,     // Data in
+		input          wr_en,   // Write enable
+		
+		input          rd_en,   // Read the next word
+		
+		output reg [WIDTH-1:0]  dout,    // Data out
+		output         full,
+		output         nearly_full,
+		output         prog_full,
+		output         empty,
+		input          reset,
+		input          clk
+	);
+	reg                   fifo_valid, middle_valid, dout_valid;
+	reg [(WIDTH-1):0]     middle_dout;
+
+	wire [(WIDTH-1):0]    fifo_dout;
+	wire                  fifo_empty, fifo_rd_en;
+	wire                  will_update_middle, will_update_dout;
+
+	// orig_fifo is just a normal (non-FWFT) synchronous or asynchronous FIFO
+	small_fifo #(
+		.WIDTH (WIDTH),
+		.MAX_DEPTH_BITS (MAX_DEPTH_BITS),
+		.PROG_FULL_THRESHOLD (PROG_FULL_THRESHOLD)
+	) fifo(
+		.din           (din),
+		.wr_en         (wr_en),
+		.rd_en         (fifo_rd_en),
+		.dout          (fifo_dout),
+		.full          (full),
+		.nearly_full   (nearly_full),
+		.prog_full     (prog_full),
+		.empty         (fifo_empty),
+		.reset         (reset),
+		.clk           (clk)
+	);
+
+	assign will_update_middle = fifo_valid && (middle_valid == will_update_dout);
+	assign will_update_dout = (middle_valid || fifo_valid) && (rd_en || !dout_valid);
+	assign fifo_rd_en = (!fifo_empty) && !(middle_valid && dout_valid && fifo_valid);
+	assign empty = !dout_valid;
+
+	always @(posedge clk) begin
+		if (reset)begin
+			fifo_valid <= 0;
+			middle_valid <= 0;
+			dout_valid <= 0;
+			dout <= 0;
+			middle_dout <= 0;
+		end	else begin
+			if (will_update_middle)
+				middle_dout <= fifo_dout;
+				
+			if (will_update_dout)
+				dout <= middle_valid ? middle_dout : fifo_dout;
+
+			if (fifo_rd_en)
+				 fifo_valid <= 1;
+			else if (will_update_middle || will_update_dout)
+				 fifo_valid <= 0;
+			
+			if (will_update_middle)
+				 middle_valid <= 1;
+			else if (will_update_dout)
+				 middle_valid <= 0;
+			
+			if (will_update_dout)
+				 dout_valid <= 1;
+			else if (rd_en)
+				 dout_valid <= 0;
+		end 
+	end
+	endmodule
+	///////////////////////////////////////////////////////////////////////////////
+	// $Id: small_fifo.v 4761 2008-12-27 01:11:00Z jnaous $
+	//
+	// Module: small_fifo.v
+	// Project: UNET
+	// Description: small fifo with no fallthrough i.e. data valid after rd is high
+	//
+	// Change history:
+	//   7/20/07 -- Set nearly full to 2^MAX_DEPTH_BITS - 1 by default so that it
+	//              goes high a clock cycle early.
+	//   11/2/09 -- Modified to have both prog threshold and almost full
+	///////////////////////////////////////////////////////////////////////////////
+	module small_fifo #(
+		parameter WIDTH = 72,
+		parameter MAX_DEPTH_BITS = 3,
+		parameter PROG_FULL_THRESHOLD = 2**MAX_DEPTH_BITS - 1
+	)	(
+		input [WIDTH-1:0] din,     // Data in
+		input             wr_en,   // Write enable
+
+		input             rd_en,   // Read the next word
+
+		output reg [WIDTH-1:0]  dout,    // Data out
+		output         full,
+		output         nearly_full,
+		output         prog_full,
+		output         empty,
+
+		input          reset,
+		input          clk
+	);
+	parameter MAX_DEPTH        = 2 ** MAX_DEPTH_BITS;
+
+	reg [WIDTH-1:0] queue [MAX_DEPTH - 1 : 0];
+	reg [MAX_DEPTH_BITS - 1 : 0] rd_ptr;
+	reg [MAX_DEPTH_BITS - 1 : 0] wr_ptr;
+	reg [MAX_DEPTH_BITS : 0] depth;
+
+	// Sample the data
+	always @(posedge clk)begin
+		if (wr_en)
+			queue[wr_ptr] <= din;
+		if (rd_en)
+			dout <=
+			// synthesis translate_off
+			#1
+			// synthesis translate_on
+			queue[rd_ptr];
+	end
+
+	always @(posedge clk)begin
+		if (reset) begin
+			rd_ptr <= 'h0;
+			wr_ptr <= 'h0;
+			depth  <= 'h0;
+		end else begin
+			if (wr_en) wr_ptr <= wr_ptr + 'h1;
+			if (rd_en) rd_ptr <= rd_ptr + 'h1;
+			if (wr_en & ~rd_en) depth <=
+				// synthesis translate_off
+				#1
+				// synthesis translate_on
+				depth + 'h1;
+			else if (~wr_en & rd_en) depth <=
+				// synthesis translate_off
+				#1
+				// synthesis translate_on
+				depth - 'h1;
+		 end
+	end
+
+	assign full = depth == MAX_DEPTH;
+	assign prog_full = (depth >= PROG_FULL_THRESHOLD);
+	assign nearly_full = depth >= MAX_DEPTH-1;
+	assign empty = depth == 'h0;
+
+	// synthesis translate_off
+	always @(posedge clk)
+	begin
+		 if (wr_en && depth == MAX_DEPTH && !rd_en)
+				$display($time, " ERROR: Attempt to write to full FIFO: %m");
+		 if (rd_en && depth == 'h0)
+				$display($time, " ERROR: Attempt to read an empty FIFO: %m");
+	end
+	// synthesis translate_on
+
+	endmodule
+
 
