@@ -8,7 +8,11 @@
 " cscope:建立数据库：cscope -Rbq  
 """""""""""""""""""""""""""""""""""""""""""
 if has("cscope")
-  set csprg=/usr/bin/cscope
+  if has("win32")
+    set cscopeprg=c:\cscope\cscope
+  else
+    set csprg=/usr/bin/cscope
+  end
   set csto=1
   set cst
   set nocsverb

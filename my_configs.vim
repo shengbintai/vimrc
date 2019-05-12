@@ -22,7 +22,7 @@ map zh zH
 if has("win32")
   nmap <silent> <leader>em :e $MYVIMRC<CR>
   nmap <silent> <leader>ep :e $HOME/.vim/vim_runtime/vimrcs/plugins_config.vim<CR>
-  nmap <silent> <leader>ev :e!$HOME/.vim/vim_runtime/sources_non_forked/vim-snippets/snippets/verilog.snippets<cr>.
+  nmap <silent> <leader>ev :e $HOME/.vim/vim_runtime/sources_non_forked/vim-snippets/snippets/verilog.snippets<cr>.
 else
   nmap <silent> <leader>em :e $MYVIMRC<CR>
   nmap <silent> <leader>ep :e ~/vim_runtime/vimrcs/plugins_config.vim<CR>
