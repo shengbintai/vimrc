@@ -4,7 +4,7 @@
 
 set rnu
 if has('mouse')
-  set mouse=a
+  set mouse-=a
 endif
 
 if has("linux)
