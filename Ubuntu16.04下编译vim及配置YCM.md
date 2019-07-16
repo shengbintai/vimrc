@@ -127,5 +127,6 @@ git submodule update --init --recursive
 ## 编译YouCompleteMe
 
 ```shell
-`cd` `~/.vim``/bundle/YouCompleteMe``.``/install``.py --clang-completer --system-libclang`
+cd YouCompleteMe
+。/install.py --clang-completer --system-libclang
 ```
