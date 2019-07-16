@@ -128,5 +128,5 @@ git submodule update --init --recursive
 
 ```shell
 cd YouCompleteMe
-。/install.py --clang-completer --system-libclang
+./install.py --clang-completer --system-libclang
 ```
