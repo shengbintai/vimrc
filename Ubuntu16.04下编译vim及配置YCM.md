@@ -130,3 +130,9 @@ git submodule update --init --recursive
 cd YouCompleteMe
 ./install.py --clang-completer --system-libclang
 ```
+## 发现无法启动YCM尝试采用高版本的clang
+```
+　　sudo apt-get install clang-7
+　　sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-7 1 --slave /usr/bin/clang++ clang++ /usr/bin/clang++-7
+　　sudo apt-get install  libclang-7.0-dev
+```
