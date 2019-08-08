@@ -125,6 +125,7 @@ git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim_runti
 git submodule update --init --recursive
 ```
 
+
 ## 编译YouCompleteMe
 
 ```shell
@@ -133,7 +134,6 @@ cd YouCompleteMe
 ```
 ## 发现无法启动YCM尝试采用高版本的clang
 ```
-　　sudo apt-get install clang-7
-　　sudo update-alternatives --install /usr/bin/clang clang /usr/bin/clang-7 1 --slave /usr/bin/clang++ clang++ /usr/bin/clang++-7
-　　sudo apt-get install  libclang-7.0-dev
+#go 下载失败，到这个地方下载到对应位置即可
+git clone https://github.com/golang/tools.git
 ```
