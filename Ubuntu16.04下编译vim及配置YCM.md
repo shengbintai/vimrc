@@ -119,6 +119,7 @@ sudo apt install build-essential cmake clang
 ```
 
 ```shell
+git clone --recursive https://gitee.com/mirrors/youcompleteme.git ~/.vim_runtime/my_plugins/YouCompleteMe
 git clone --recursive https://github.com/Valloric/YouCompleteMe.git ~/.vim_runtime/my_plugins/YouCompleteMe
 #进入到YouCompleteMe文件夹下，执行如下命令，目的是确保下载内容完整
 git submodule update --init --recursive
