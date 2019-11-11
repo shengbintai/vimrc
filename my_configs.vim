@@ -7,7 +7,7 @@ if has('mouse')
   set mouse-=a
 endif
 
-if has("linux)
+if has('linux')
 " Enable clipboard from vim to global clipboard
   set clipboard=unnamedplus
 endif
